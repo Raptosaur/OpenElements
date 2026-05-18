@@ -18,6 +18,9 @@ We are far far away from a final working product, as I notice things not impleme
 - [x] Static Image rendering
 - [ ] Static Video rendering
 - [ ] Static Text rendering
+- [ ] SE Widget Custom Event List
+  - [ ] Listeners
+  - [x] Basic implementation
 - [ ] Latest subscriber rendering - Partially implemented
 - [ ] SE Widget Alert Box Rendering
   - [ ] TTS Playback (any voice for now - disregard the voice in UI)

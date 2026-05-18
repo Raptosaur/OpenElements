@@ -1,6 +1,7 @@
 import { ImageRenderer } from "./ImageRenderer.tsx";
 import { SEWidgetAlertBox } from "./SEWidgetAlertBox.tsx";
 import { LatestSubscriberRenderer } from "./LatestSubscriberRenderer.tsx";
+import { SEWidgetCustomEventList } from "./SEWidgetCustomEventList.tsx";
 
 export const Renderer = ({ config }: { config: object }) => (
   <>
@@ -15,6 +16,8 @@ export const Renderer = ({ config }: { config: object }) => (
         console.log(widget);
         if (!widget.visible) return;
         switch (widget.type) {
+          case "se-widget-custom-event-list":
+            return <SEWidgetCustomEventList {...widget} />;
           case "subscriber-latest":
             return <LatestSubscriberRenderer {...widget} />;
           case "se-widget-alert-box":
