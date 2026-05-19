@@ -23,7 +23,12 @@ We are far far away from a final working product, as I notice things not impleme
 - [ ] SE Widget Custom Event List
   - [ ] Listeners
   - [x] Basic implementation
-- [ ] Latest subscriber rendering - Partially implemented
+- [ ] Latest subscriber rendering
+  - [x] Static text rendering
+  - [ ] Listeners
+- [ ] Latest follower rendering
+  - [x] Static text rendering
+  - [ ] Listeners
 - [ ] SE Widget Alert Box Rendering
   - [ ] TTS Playback (any voice for now - disregard the voice in UI)
   - [x] Sound alert playback

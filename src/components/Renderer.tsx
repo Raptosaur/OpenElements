@@ -1,6 +1,7 @@
 import { ImageRenderer } from "./ImageRenderer.tsx";
 import { SEWidgetAlertBox } from "./SEWidgetAlertBox.tsx";
 import { LatestSubscriberRenderer } from "./LatestSubscriberRenderer.tsx";
+import { LatestFollowerRenderer } from "./LatestFollowerRenderer.tsx";
 import { SEWidgetCustomEventList } from "./SEWidgetCustomEventList.tsx";
 import { TextRenderer } from "./TextRenderer.tsx";
 import { useMemo } from "preact/hooks";
@@ -30,7 +31,7 @@ const groupings = (widgets) => {
   );
 };
 
-export const GroupRenderer = ({ widgets, config }) => {
+const GroupRenderer = ({ widgets, config }) => {
   return (
     <div style={{ ...config?.css, position: "absolute" }}>
       <WidgetRenderer widgets={widgets} />
@@ -66,6 +67,8 @@ export const WidgetRenderer = ({ widgets }: { widgets: object[] }) => {
       {widgets.map((widget) => {
         if (!widget.visible) return;
         switch (widget.type) {
+          case "follower-latest":
+            return <LatestFollowerRenderer {...widget} />;
           case "se-widget-custom-event-list":
             return <SEWidgetCustomEventList {...widget} />;
           case "subscriber-latest":
