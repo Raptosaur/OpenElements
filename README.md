@@ -18,6 +18,7 @@ We are far far away from a final working product, as I notice things not impleme
 - [x] Group rendering
 - [x] Static Image rendering
 - [ ] Static Video rendering
+- [ ] KappaGen (Fountain thing) - this is gonna be tricky to make performant
 - [x] Static Text rendering
 - [ ] SE Widget Custom Event List
   - [ ] Listeners
