@@ -15,9 +15,10 @@ Please note: we are using Preact since these are overlays. They are going to req
 We are far far away from a final working product, as I notice things not implements I should keep this updated.
 
 - [x] Basic rendering
+- [x] Group rendering
 - [x] Static Image rendering
 - [ ] Static Video rendering
-- [ ] Static Text rendering
+- [x] Static Text rendering
 - [ ] SE Widget Custom Event List
   - [ ] Listeners
   - [x] Basic implementation
@@ -28,6 +29,5 @@ We are far far away from a final working product, as I notice things not impleme
   - [x] Image alert rendering
   - [x] Video alert rendering
   - [ ] Animations (fadeIn/fadeOut etc..)
-- [ ] Custom widget rendering
 - [ ] Server & Events
 - [ ] Event Emulator

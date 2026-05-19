@@ -2,9 +2,50 @@ import { ImageRenderer } from "./ImageRenderer.tsx";
 import { SEWidgetAlertBox } from "./SEWidgetAlertBox.tsx";
 import { LatestSubscriberRenderer } from "./LatestSubscriberRenderer.tsx";
 import { SEWidgetCustomEventList } from "./SEWidgetCustomEventList.tsx";
+import { TextRenderer } from "./TextRenderer.tsx";
+import { useMemo } from "preact/hooks";
 
-export const Renderer = ({ config }: { config: object }) => (
-  <>
+const groupings = (widgets) => {
+  console.log(widgets);
+  return widgets.reduce<Record, { widgets: object[]; config: object }>(
+    (groups, widget) => {
+      if (widget.type === "se-widget-group") {
+        if (!groups[widget.variables.uid]) {
+          groups[widget.group] = { widgets: [] };
+        }
+        groups[widget.variables.uid].config = widget;
+        return groups;
+      }
+      if (!widget.group) {
+        groups.ungrouped.widgets.push(widget);
+        return groups;
+      }
+      if (!groups[widget.group]) {
+        groups[widget.group] = { widgets: [] };
+      }
+      groups[widget.group].widgets.push(widget);
+      return groups;
+    },
+    { ungrouped: { widgets: [] } },
+  );
+};
+
+export const GroupRenderer = ({ widgets, config }) => {
+  return (
+    <div style={{ ...config?.css, position: "absolute" }}>
+      <WidgetRenderer widgets={widgets} />
+    </div>
+  );
+};
+
+export const Renderer = ({ config }) => {
+  console.log(config);
+  const groups = useMemo(() => {
+    return groupings(config.widgets);
+  }, [config.widgets]);
+
+  console.log(groups);
+  return (
     <div
       style={{
         width: config.settings.width,
@@ -12,8 +53,17 @@ export const Renderer = ({ config }: { config: object }) => (
         overflow: "hidden",
       }}
     >
-      {config.widgets.map((widget) => {
-        console.log(widget);
+      {Object.values(groups).map((group) => (
+        <GroupRenderer config={group.config} widgets={group.widgets} />
+      ))}
+    </div>
+  );
+};
+
+export const WidgetRenderer = ({ widgets }: { widgets: object[] }) => {
+  return (
+    <>
+      {widgets.map((widget) => {
         if (!widget.visible) return;
         switch (widget.type) {
           case "se-widget-custom-event-list":
@@ -22,15 +72,21 @@ export const Renderer = ({ config }: { config: object }) => (
             return <LatestSubscriberRenderer {...widget} />;
           case "se-widget-alert-box":
             return <SEWidgetAlertBox {...widget} />;
+          case "text":
+            return <TextRenderer {...widget} />;
           case "image":
             return <ImageRenderer {...widget} />;
           default:
+            console.error(
+              "unable to render widget, fallback to default renderer",
+              widget,
+            );
             return <DefaultRenderer {...widget} />;
         }
       })}
-    </div>
-  </>
-);
+    </>
+  );
+};
 
 export const DefaultRenderer = (widget) => {
   return (

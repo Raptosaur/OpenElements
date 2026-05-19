@@ -42,7 +42,7 @@ export const SEWidgetCustomEventList = (widget) => {
     <iframe
       ref={iframeRef}
       srcDoc={srcDoc}
-      style={{ ...widget.css, border: "none" }}
+      style={{ ...widget.css, border: "none", position: "absolute" }}
       title={widget.name}
     />
   );
