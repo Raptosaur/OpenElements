@@ -31,7 +31,7 @@ export const SEWidgetCustomEventList = (widget) => {
         iframe.contentWindow?.dispatchEvent(
           new CustomEvent("onWidgetLoad", {
             detail: {
-              fieldData: widget.variables.fieldData, // ← was 'field', must be 'fieldData'
+              fieldData: widget.variables.fieldData,
             },
           }),
         );
