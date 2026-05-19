@@ -5,9 +5,9 @@ import { LatestFollowerRenderer } from "./LatestFollowerRenderer.tsx";
 import { SEWidgetCustomEventList } from "./SEWidgetCustomEventList.tsx";
 import { TextRenderer } from "./TextRenderer.tsx";
 import { useMemo } from "preact/hooks";
+import { cssMapper } from "../util/cssMapper.ts";
 
 const groupings = (widgets) => {
-  console.log(widgets);
   return widgets.reduce<Record, { widgets: object[]; config: object }>(
     (groups, widget) => {
       if (widget.type === "se-widget-group") {
@@ -33,19 +33,17 @@ const groupings = (widgets) => {
 
 const GroupRenderer = ({ widgets, config }) => {
   return (
-    <div style={{ ...config?.css, position: "absolute" }}>
+    <div style={cssMapper({ ...config?.css, position: "absolute" })}>
       <WidgetRenderer widgets={widgets} />
     </div>
   );
 };
 
 export const Renderer = ({ config }) => {
-  console.log(config);
   const groups = useMemo(() => {
     return groupings(config.widgets);
   }, [config.widgets]);
 
-  console.log(groups);
   return (
     <div
       style={{
@@ -79,6 +77,8 @@ export const WidgetRenderer = ({ widgets }: { widgets: object[] }) => {
             return <TextRenderer {...widget} />;
           case "image":
             return <ImageRenderer {...widget} />;
+          case "se-widget-kappagen":
+            return;
           default:
             console.error(
               "unable to render widget, fallback to default renderer",
@@ -94,11 +94,11 @@ export const WidgetRenderer = ({ widgets }: { widgets: object[] }) => {
 export const DefaultRenderer = (widget) => {
   return (
     <div
-      style={{
+      style={cssMapper({
         ...widget.css,
         position: "absolute",
         overflow: "hidden",
-      }}
+      })}
     >
       {JSON.stringify(widget)}
     </div>

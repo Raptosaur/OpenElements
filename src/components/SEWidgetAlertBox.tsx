@@ -1,6 +1,7 @@
 import { useState } from "preact/hooks";
 import { ImageAlertRenderer } from "./alerts/ImageAlertRenderer.tsx";
 import { VideoAlertRenderer } from "./alerts/VideoAlertRenderer.tsx";
+import { cssMapper } from "../util/cssMapper.ts";
 
 export const SEWidgetAlertBox = (widget: object) => {
   const [currentEvent, setCurrentEvent] = useState({
@@ -17,14 +18,13 @@ export const SEWidgetAlertBox = (widget: object) => {
     if (!widget.listeners[`${event.type}-latest`]) {
       return;
     }
-    console.log(event.type, eventConfig);
     const builder = [];
     if (eventConfig.graphics.type === "image") {
       builder.push(
         <ImageAlertRenderer
           eventConfig={eventConfig}
           event={event}
-          css={widget.image.css}
+          css={cssMapper(widget.image.css)}
         />,
       );
     }
@@ -33,7 +33,7 @@ export const SEWidgetAlertBox = (widget: object) => {
         <VideoAlertRenderer
           eventConfig={eventConfig}
           event={event}
-          css={widget.video.css}
+          css={cssMapper(widget.video.css)}
         />,
       );
     }
@@ -51,11 +51,11 @@ export const SEWidgetAlertBox = (widget: object) => {
 
   return (
     <div
-      style={{
+      style={cssMapper({
         ...widget.css,
         position: "absolute",
         overflow: "hidden",
-      }}
+      })}
     >
       {currentEvent && <EventRenderer event={currentEvent} widget={widget} />}
     </div>

@@ -1,8 +1,10 @@
+import { cssMapper } from "../util/cssMapper.ts";
+
 export const LatestFollowerRenderer = (widget) => {
   //TODO: Add listeners
   return (
-    <div style={{ ...widget.css, position: "absolute" }}>
-      <p style={{ ...widget.text.css.message }}>{widget.text.value}</p>
+    <div style={cssMapper({ ...widget.css, position: "absolute" })}>
+      <div style={cssMapper(widget.text.css)}>{widget.text.value}</div>
     </div>
   );
 };

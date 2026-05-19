@@ -1,7 +1,9 @@
+import { cssMapper } from "../util/cssMapper.ts";
+
 export const TextRenderer = (widget: object) => {
   return (
-    <div style={{ ...widget.css, position: "absolute" }}>
-      <span style={widget.text.css}>{widget.text.value}</span>
+    <div style={cssMapper({ ...widget.css, position: "absolute" })}>
+      <span style={cssMapper(widget.text.css)}>{widget.text.value}</span>
     </div>
   );
 };

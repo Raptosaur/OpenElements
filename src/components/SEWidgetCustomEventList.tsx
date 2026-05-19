@@ -1,3 +1,5 @@
+import { cssMapper } from "../util/cssMapper.ts";
+
 import { useMemo, useRef, useEffect } from "preact/hooks";
 
 export const SEWidgetCustomEventList = (widget) => {
@@ -5,10 +7,13 @@ export const SEWidgetCustomEventList = (widget) => {
 
   const srcDoc = useMemo(() => {
     let css = widget.variables.css || "";
-    console.log(Object.entries(widget.variables.fieldData));
+    let html = widget.variables.html || "";
+
     Object.entries(widget.variables.fieldData).forEach(([key, value]) => {
       css = css.replaceAll(`{{${key}}}`, value);
+      html = html.replaceAll(`{{${key}}}`, value);
     });
+
     return `<!DOCTYPE html>
       <html>
         <head>
@@ -16,7 +21,7 @@ export const SEWidgetCustomEventList = (widget) => {
           <style>${css}</style>
         </head>
         <body style="margin:0;overflow:hidden;">
-          ${widget.variables.html}
+          ${html}
           <script>${widget.variables.js}<\/script>
         </body>
       </html>`;
@@ -43,11 +48,22 @@ export const SEWidgetCustomEventList = (widget) => {
   }, [widget.variables.fieldData]);
 
   return (
-    <iframe
-      ref={iframeRef}
-      srcDoc={srcDoc}
-      style={{ ...widget.css, border: "none", position: "absolute" }}
-      title={widget.name}
-    />
+    <div
+      style={cssMapper({
+        ...widget.css,
+        border: "none",
+        position: "absolute",
+        overflow: "hidden",
+      })}
+    >
+      <iframe
+        ref={iframeRef}
+        srcDoc={srcDoc}
+        style={cssMapper({
+          border: "none",
+        })}
+        title={widget.name}
+      />
+    </div>
   );
 };
